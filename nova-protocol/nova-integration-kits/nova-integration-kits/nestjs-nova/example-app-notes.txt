@@ -1,0 +1,13 @@
+
+// nestjs-nova/example-app-notes.txt
+Integration steps:
+1) Install deps:
+   npm i nova-js
+2) Add NovaModule to your root AppModule:
+   import { Module } from '@nestjs/common';
+   import { NovaModule } from './nestjs-nova/nova.module';
+   @Module({ imports: [NovaModule, ...] })
+   export class AppModule {}
+3) Return plain JS objects from controllers. The interceptor handles negotiation.
+4) Optional: disable for specific routes using @SkipThrottle() style custom decorator if needed.
+5) Benchmark: add ?__metrics=1 to any route and inspect headers.

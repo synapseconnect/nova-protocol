@@ -1,0 +1,12 @@
+{
+  "name": "nova-monorepo",
+  "private": true,
+  "version": "0.2.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm -w nova-ts run build",
+    "test": "node -e \"console.log('Run workspace tests via npm -w <pkg> test')\""
+  }
+}

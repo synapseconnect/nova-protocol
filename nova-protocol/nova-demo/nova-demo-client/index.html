@@ -1,0 +1,19 @@
+
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>NOVA Client</title></head>
+<body>
+  <h1>NOVA Client Demo</h1>
+  <button id="btn">Fetch NOVA</button>
+  <pre id="out"></pre>
+  <script type="module">
+    import { fetchNova } from "../nova-js/fetchNova.js";
+    document.getElementById("btn").onclick = async () => {
+      const data = await fetchNova("http://localhost:3000/api/invoice/42", {
+        headers: { "Accept": "application/nova+json" }
+      });
+      document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>

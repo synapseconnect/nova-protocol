@@ -1,0 +1,26 @@
+{
+  "name": "nova-js",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "NOVA (text) encoder/decoder + Express middleware + CLI (JavaScript)",
+  "main": "index.js",
+  "bin": {
+    "nova-js": "cli.js"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./middleware.js": "./middleware.js",
+    "./fetchNova.js": "./fetchNova.js"
+  },
+  "scripts": {
+    "test": "node ./test/roundtrip.mjs"
+  },
+  "keywords": [
+    "nova",
+    "json",
+    "data-format",
+    "encoder",
+    "decoder"
+  ],
+  "license": "MIT"
+}

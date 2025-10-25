@@ -1,0 +1,9 @@
+{
+  "name": "nova-demo-api",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

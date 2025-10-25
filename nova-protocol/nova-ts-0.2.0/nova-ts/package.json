@@ -1,0 +1,33 @@
+{
+  "name": "nova-ts",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "NOVA (text) encoder/decoder + Express middleware + CLI (TypeScript)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "nova-ts": "dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./middleware.js": "./dist/middleware.js",
+    "./fetchNova.js": "./dist/fetchNova.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build",
+    "test": "node -e \"import('./dist/index.js').then(m=>console.log('OK'))\""
+  },
+  "keywords": [
+    "nova",
+    "json",
+    "data-format",
+    "encoder",
+    "decoder",
+    "typescript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
