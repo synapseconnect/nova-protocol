@@ -3,6 +3,8 @@
 **NOVA** (Next Object Versatile Architecture) is a next-generation data interchange format — faster, more compact, and more expressive than JSON or XML.  
 It supports **binary encoding (NOVA-B)** and **text encoding (NOVA-T)**, plus **direct integration** with Express, Fastify, and NestJS.
 
+For more info: https://synapseconnect.github.io/nova-protocol
+
 ---
 
 ## 🌍 Overview
