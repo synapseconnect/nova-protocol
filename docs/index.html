@@ -1,36 +1,160 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
   <title>NOVA Protocol</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+<link rel="icon" href="./logo.png" />
+  <!-- Theme (GitHub-style light) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="NOVA Protocol — Faster, Smaller, Smarter than JSON" />
+  <meta property="og:description" content="Dual-mode data format with text (NOVA-T) and binary (NOVA-B), built for modern APIs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://synapseconnect.github.io/nova-protocol/" />
+  <!-- <link rel="icon" href="./favicon.ico" /> -->
+
   <style>
-    :root { --theme-color: #1f6feb; }
-    .app-name { font-weight: 700; letter-spacing: 0.2px; }
-    .sidebar ul li a { font-size: 14px; }
-    .markdown-section code, .markdown-section pre { font-size: 13px; }
-    .cta { background:#1f6feb; color:#fff; padding:8px 12px; border-radius:6px; text-decoration:none; }
+    :root {
+      --theme-color: #1f6feb;
+    }
+    /* Top nav */
+    .topbar {
+      position: sticky; top: 0; z-index: 999;
+      display: flex; align-items: center; gap: 16px;
+      padding: 10px 16px; background: #fff; border-bottom: 1px solid #e5e7eb;
+    }
+    .topbar .brand { font-weight: 700; font-size: 16px; letter-spacing: .2px; }
+    .topbar nav a {
+      color: #111827; text-decoration: none; margin: 0 8px; font-size: 14px;
+    }
+    .topbar nav a:hover { color: var(--theme-color); }
+    .topbar .spacer { flex: 1; }
+    .topbar .btn {
+      border: 1px solid #d1d5db; border-radius: 8px; padding: 6px 10px; font-size: 13px;
+      text-decoration: none; color: #111827; background: #fff;
+    }
+    .topbar .btn.primary { border-color: var(--theme-color); color: #fff; background: var(--theme-color); }
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border-bottom: 1px solid #eef2f7;
+      padding: 28px 18px;
+    }
+    .hero h1 { margin: 0 0 6px 0; font-size: 24px; }
+    .hero p { margin: 0; color: #4b5563; }
+    .hero .cta-row { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .cta {
+      background:#1f6feb; color:#fff; padding:8px 12px; border-radius:8px; text-decoration:none; font-size:14px;
+    }
+    .cta.secondary {
+      background:#fff; color:#1f6feb; border:1px solid #1f6feb;
+    }
+    /* Footer */
+    .footer {
+      margin: 24px 0 16px; padding-top: 16px; border-top: 1px solid #eef2f7; color: #6b7280; font-size: 13px;
+    }
+    /* Dark mode */
+    html.dark .topbar { background: #0b1220; border-bottom-color: #111827; }
+    html.dark .topbar nav a { color: #e5e7eb; }
+    html.dark .topbar .btn { color: #e5e7eb; border-color: #374151; background: #0b1220; }
+    html.dark .topbar .btn.primary { color: #fff; background: #2563eb; border-color: #2563eb; }
+    html.dark .hero { background: linear-gradient(180deg, #0f172a 0%, #0b1220 100%); border-bottom-color: #111827; }
+    html.dark .hero h1 { color: #e5e7eb; }
+    html.dark .hero p { color: #9ca3af; }
+    html.dark .cta.secondary { background: transparent; color: #60a5fa; border-color: #2563eb; }
+    html.dark .footer { border-top-color: #111827; color: #9ca3af; }
   </style>
 </head>
 <body>
+  <!-- Mount point -->
   <div id="app"></div>
-  <script>
-  window.$docsify = {
-    name: 'NOVA Protocol',
-    repo: 'https://github.com/synapseconnect/nova-protocol',
-    loadSidebar: true,
-    subMaxLevel: 2,
-    auto2top: true,
-    search: 'auto',
-    themeColor: '#1f6feb',
-    routerMode: 'history'
-  }
-</script>
 
+  <script>
+    // ----- Dark mode (persist in localStorage)
+    (function(){
+      const k = 'nova-docs-theme';
+      const saved = localStorage.getItem(k);
+      if (saved === 'dark') document.documentElement.classList.add('dark');
+      window.toggleTheme = function() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem(k, isDark ? 'dark' : 'light');
+      };
+    })();
+
+    // ----- Docsify config
+    window.$docsify = {
+      name: 'NOVA Protocol',
+      repo: 'https://github.com/synapseconnect/nova-protocol',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      search: 'auto',
+      themeColor: '#1f6feb',
+      // Set to 'history' for clean URLs (no #). If you do this, add docs/404.html (see note below)
+      routerMode: 'history',
+
+      // Render hooks: inject topbar + hero + footer
+      plugins: [
+        function(hook, vm) {
+          hook.afterEach(function(html, next) {
+            // hero only on home page (#/ or /)
+            const isHome = vm.route.path === '/' || vm.route.path === '/README';
+            const hero = isHome ? `
+              <section class="hero">
+                <h1>Faster • Smaller • Smarter than JSON</h1>
+                <p>Dual-mode data format with text (NOVA-T) and binary (NOVA-B), built for modern APIs.</p>
+                <div class="cta-row">
+                  <a class="cta" href="#/quickstart">Get Started</a>
+                  <a class="cta secondary" href="./NOVA_Protocol_Specification_v1.0.pdf" target="_blank" rel="noopener">Download Spec (PDF)</a>
+                  <a class="cta secondary" href="https://github.com/synapseconnect/nova-protocol" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </section>
+            ` : '';
+
+            const topbar = `
+              <header class="topbar">
+                <div class="brand"><img src="./logo.png" height="24" style="vertical-align:middle;margin-right:6px;">NOVA Protocol</div>
+                <nav>
+                  <a href="#/">Home</a>
+                  <a href="#/quickstart">Quick Start</a>
+                  <a href="#/integrations">Integrations</a>
+                  <a href="#/benchmarks">Benchmarks</a>
+                  <a href="#/api-reference">API</a>
+                  <a href="#/roadmap">Roadmap</a>
+                  <a href="./NOVA_Protocol_Specification_v1.0.pdf" target="_blank" rel="noopener">Spec PDF</a>
+                </nav>
+                <div class="spacer"></div>
+                <a class="btn" href="https://github.com/synapseconnect/nova-protocol" target="_blank" rel="noopener">GitHub</a>
+                <button class="btn primary" onclick="toggleTheme()">Toggle Theme</button>
+              </header>
+            `;
+
+            const footer = `
+              <div class="footer">
+                <div>© ${new Date().getFullYear()} SynapseConnect — NOVA Protocol.</div>
+                <div>Docs powered by Docsify. Built with ❤️ in Mauritius.</div>
+              </div>
+            `;
+
+            next(`${topbar}${hero}${html}${footer}`);
+          });
+        }
+      ]
+    };
+  </script>
+
+  <!-- Docsify core -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <!-- Plugins -->
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+  <!-- Syntax highlight -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>

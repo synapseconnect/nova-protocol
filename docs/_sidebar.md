@@ -5,5 +5,6 @@
   - [Integrations](integrations.md)
   - [Benchmarks & Metrics](benchmarks.md)
   - [API Reference](api-reference.md)
+  - [Roadmap](roadmap.md)
 - About
   - [About NOVA](about.md)
