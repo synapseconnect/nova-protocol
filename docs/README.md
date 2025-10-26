@@ -3,7 +3,7 @@
 **NOVA** is a next-generation data interchange format — faster, more compact, and more expressive than JSON or XML.  
 It supports **binary encoding (NOVA-B)** and **text encoding (NOVA-T)**, with integrations for **Express**, **Fastify**, and **NestJS**.
 
-👉 [Download Nova Protocol Specification](nova-protocol/NOVA_Protocol_Specification_v1.0.pdf)
+👉 [Download Nova Protocol Specification](NOVA_Protocol_Specification_v1.0.pdf)
 
 
 ## Why NOVA?
